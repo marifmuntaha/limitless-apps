@@ -18,7 +18,7 @@ class PaymentResource extends JsonResource
             'id' => $this->id,
             'invoice' => new InvoiceResource($this->invoices),
             'amount' => $this->amount,
-            'method' => $this->method,
+            'method' => $this->methods,
             'at' => $this->at
         ];
     }

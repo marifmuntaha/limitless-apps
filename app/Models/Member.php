@@ -13,27 +13,29 @@ class Member extends Model
 
     protected $fillable = [
         'user',
+        'category',
         'name',
         'address',
         'installation',
+        'pppoe_user',
+        'pppoe_password',
         'note',
         'status'
     ];
-
-    protected function installation(): Attribute
-    {
-        return Attribute::make(
-            get: fn(string $value) => Carbon::parse($value)->format('Y-m-d'),
-            set: fn(string $value) => Carbon::createFromFormat('Y-m-d', $value),
-        );
-    }
-
     public function users(): object
     {
         return $this->hasOne(
             User::class,
             'id',
             'user'
+        );
+    }
+    public function categories(): object
+    {
+        return $this->hasOne(
+            Category::class,
+            'id',
+            'category'
         );
     }
 

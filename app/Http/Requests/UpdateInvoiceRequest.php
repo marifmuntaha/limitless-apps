@@ -25,6 +25,9 @@ class UpdateInvoiceRequest extends FormRequest
         return [
             'product' => 'nullable',
             'desc' => 'required',
+            'price' => 'required',
+            'discount' => 'nullable',
+            'fees' => 'nullable',
             'amount' => 'required',
             'status' => 'required',
             'due' => 'required',
@@ -37,6 +40,9 @@ class UpdateInvoiceRequest extends FormRequest
         return [
             'product' => 'Produk',
             'desc' => 'Diskripsi',
+            'price' => 'Harga',
+            'discount' => 'Diskon',
+            'fees' => 'Biaya Admin',
             'amount' => 'Harga',
             'status' => ' Status',
             'due' => 'Jatuh Tempo',

@@ -29,7 +29,7 @@ class MemberPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === '1';
     }
 
     /**
@@ -37,7 +37,7 @@ class MemberPolicy
      */
     public function update(User $user, Member $member): bool
     {
-        //
+        return $user->role === '1' || $user->id === $member->user;
     }
 
     /**
@@ -45,7 +45,7 @@ class MemberPolicy
      */
     public function delete(User $user, Member $member): bool
     {
-        //
+        return $user->role === '1';
     }
 
     /**

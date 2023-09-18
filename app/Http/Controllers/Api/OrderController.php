@@ -17,6 +17,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        sleep(3);
         $order = new Order();
         $order = $request->member ? $order->whereMember($request->member) : $order;
         return response([

@@ -12,7 +12,7 @@ class UpdateMemberRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->role === '1';
+        return true;
     }
 
     /**
@@ -26,7 +26,11 @@ class UpdateMemberRequest extends FormRequest
             'user' => 'required',
             'name' => 'required',
             'address' => 'nullable',
+            'installation' => 'required',
+            'pppoe_user' => 'nullable',
+            'pppoe_password' => 'nullable',
             'note' => 'nullable',
+            'status' => 'required'
         ];
     }
 
@@ -36,7 +40,11 @@ class UpdateMemberRequest extends FormRequest
             'user' => 'ID Pengguna',
             'name' => 'Nama Lengkap',
             'address' => 'Alamat',
+            'installation' => 'Tanggal Pemasangan',
+            'pppoe_user' => 'Nama PPPOE',
+            'pppoe_password' => 'Kata Sandi PPPOE',
             'note' => 'Catatan',
+            'status' => 'Status'
         ];
     }
 }

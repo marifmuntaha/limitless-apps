@@ -12,7 +12,7 @@ class StoreMemberRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->role === '1';
+        return true;
     }
 
     /**
@@ -27,6 +27,8 @@ class StoreMemberRequest extends FormRequest
             'name' => 'required',
             'address' => 'nullable',
             'installation' => 'required',
+            'pppoe_user' => 'nullable',
+            'pppoe_password' => 'nullable',
             'note' => 'nullable',
         ];
     }
@@ -38,6 +40,8 @@ class StoreMemberRequest extends FormRequest
             'name' => 'Nama Lengkap',
             'address' => 'Alamat',
             'installation' => 'Tanggal Pemasangan',
+            'pppoe_user' => 'Nama PPPOE',
+            'pppoe_password' => 'Kata Sandi PPPOE',
             'note' => 'Catatan',
         ];
     }

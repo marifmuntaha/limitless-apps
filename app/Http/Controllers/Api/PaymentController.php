@@ -7,6 +7,8 @@ use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
+use App\Models\User;
+use App\Notifications\PaymentCreate;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -19,6 +21,8 @@ class PaymentController extends Controller
     {
         $payment = new Payment();
         $payment = $request->invoice ? $payment->whereInvoice($request->invoice) : $payment;
+        $payment = $request->start || $request->end ? $payment->whereBetween('at', [$request->start, $request->end]) : $payment;
+        $payment = $request->account ? $payment->whereMethod($request->account) : $payment;
         return response([
             'message' => null,
             'result' => PaymentResource::collection($payment->get())
@@ -31,11 +35,16 @@ class PaymentController extends Controller
     public function store(StorePaymentRequest $request)
     {
         try {
-            return ($payment = Payment::create($request->all())) ?
-                response([
+            if ($payment = Payment::create($request->all())){
+                User::find($payment->invoices->members->users->id)->notify(new PaymentCreate($payment));
+                return response([
                     'message' => 'Data Pembayaran berhasil disimpan.',
                     'result' => $payment
-                ], 201) : throw new Exception('Terjadi kesalahan server.');
+                ], 201);
+            }
+            else {
+                throw new Exception('Terjadi kesalahan server.');
+            }
         }
         catch (Exception $exception) {
             return response([

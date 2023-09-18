@@ -18,4 +18,12 @@ class Payment extends Model
             'invoice'
         );
     }
+    public function methods(): object
+    {
+        return $this->hasOne(
+            Account::class,
+            'id',
+            'method'
+        );
+    }
 }

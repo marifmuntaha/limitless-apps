@@ -7,6 +7,10 @@ use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceResource;
 use App\Models\Invoice;
+use App\Models\User;
+use App\Notifications\InvoiceStoreNotification;
+use App\Notifications\InvoiceUpdateNotification;
+use App\Notifications\PaymentCreate;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -23,6 +27,8 @@ class InvoiceController extends Controller
         $invoice = $request->year ? $invoice->whereYear('created_at', '=', $request->year) : $invoice;
         $invoice = $request->month ? $invoice->whereMonth('created_at', '=', $request->month) : $invoice;
         $invoice = $request->status ? $invoice->whereStatus($request->status) : $invoice;
+        $invoice = $request->start || $request->end ? $invoice->whereBetween('created_at', [$request->start, $request->end]) : $invoice;
+        $invoice = $request->order ? $invoice->orderBy('created_at', $request->order) : $invoice;
         return response([
             'message' => null,
             'result' => InvoiceResource::collection($invoice->get())
@@ -35,12 +41,16 @@ class InvoiceController extends Controller
     public function store(StoreInvoiceRequest $request)
     {
         try {
-            return ($invoice = Invoice::create($request->all())) ? response([
-                'message' => 'Data Tagihan berhasil dibuat.',
-                'result' => $invoice
-            ], 201) : throw new Exception('Terjadi Kesalahan Server');
-        }
-        catch (Exception $exception){
+            if ($invoice = Invoice::create($request->all())) {
+                User::find($invoice->members->users->id)->notify(new InvoiceStoreNotification($invoice));
+                return response([
+                    'message' => 'Data Tagihan berhasil dibuat.',
+                    'result' => $invoice
+                ], 201);
+            } else {
+                throw new Exception('Terjadi Kesalahan Server');
+            }
+        } catch (Exception $exception) {
             return response([
                 'message' => $exception->getMessage(),
                 'result' => null
@@ -65,14 +75,16 @@ class InvoiceController extends Controller
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
         try {
-            return $invoice->update($request->all()) ?
-                response([
+            if ($invoice->update($request->all())) {
+                $request->user()->notify(new InvoiceUpdateNotification($invoice));
+                return response([
                     'message' => 'Data Tagihan berhasil diperbarui.',
                     'result' => $invoice
-                ]) : throw new Exception('Terjadi kesalahan server');
-        }
-        catch (Exception $exception)
-        {
+                ]);
+            } else {
+                throw new Exception('Terjadi kesalahan server');
+            }
+        } catch (Exception $exception) {
             return response([
                 'message' => $exception->getMessage(),
                 'result' => null
@@ -91,8 +103,26 @@ class InvoiceController extends Controller
                     'message' => 'Data tagihan berhasil dihapus.',
                     'result' => $invoice
                 ]) : throw new Exception('Terjadi kesalahan server');
+        } catch (Exception $exception) {
+            return response([
+                'message' => $exception->getMessage(),
+                'result' => null
+            ], 422);
         }
-        catch (Exception $exception){
+    }
+
+    public function sendNotification(Invoice $invoice)
+    {
+        try {
+            $notify = $invoice->status == '1'
+                ? new PaymentCreate($invoice->payments->last())
+                : new InvoiceStoreNotification($invoice);
+            User::find($invoice->members->users->id)->notify($notify);
+            return response([
+                'message' => 'Notifikasi berhasil dikirimkan',
+                'result' => $invoice
+            ]);
+        } catch (Exception $exception) {
             return response([
                 'message' => $exception->getMessage(),
                 'result' => null

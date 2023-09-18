@@ -21,11 +21,13 @@ class InvoiceResource extends JsonResource
             'member' => new MemberResource($this->members),
             'product' => $this->products,
             'desc' => $this->desc,
+            'price' => $this->price,
+            'discount' => $this->discount,
+            'fees' => $this->fees,
             'amount' => $this->amount,
             'due' => $this->due,
             'status' => $this->status,
-            'subscribe' => $this->subscribe,
-            'create' => Carbon::parse($this->created_at)->translatedFormat('Y-m-d')
+            'create' => Carbon::parse($this->created_at)->translatedFormat('d-m-Y')
         ];
     }
 }

@@ -12,7 +12,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->role == '1';
+        return true;
     }
 
     /**
@@ -26,7 +26,7 @@ class UpdateProductRequest extends FormRequest
             'code' => 'required',
             'name' => 'required',
             'desc' => 'nullable',
-            'price' => 'required',
+            'price' => 'required|integer',
             'cycle' => 'required',
             'image' => 'nullable'
         ];

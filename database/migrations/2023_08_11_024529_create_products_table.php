@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('desc')->nullable();
-            $table->string('price');
+            $table->integer('price');
             $table->enum('cycle', ['1', '2', '3', '4'])->comment('1. Bulanan, 2. 3 Bulan, 3. 6 Bulan, 4. Tahunan');
             $table->string('image')->nullable();
             $table->timestamps();

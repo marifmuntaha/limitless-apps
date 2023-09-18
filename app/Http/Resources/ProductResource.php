@@ -14,8 +14,6 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $resource = [];
-
         if ($request->type == 'select'){
             $resource = [
                 'value' => $this->id,

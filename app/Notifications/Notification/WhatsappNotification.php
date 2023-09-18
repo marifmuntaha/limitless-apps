@@ -13,8 +13,8 @@ class WhatsappNotification
 
         $to = $notifiable->routeNotificationFor('Whatsapp');
 
-        Http::asForm()->post(config('whatsapp.host'). '/message/text?key=limitless-apps', [
-            'id' => $to,
+        Http::asForm()->post(config('whatsapp.host'). '/message/text?key='.config('whatsapp.instance'), [
+            'id' => '62'.$to,
             'message' => $message
         ]);
     }

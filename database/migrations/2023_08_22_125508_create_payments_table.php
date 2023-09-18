@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice');
+            $table->unsignedBigInteger('invoice');
             $table->string('amount');
             $table->enum('method', ['1', '2', '3'])->comment('1. Tunai, 2. BCA, 3. DANA');
             $table->date('at');
             $table->timestamps();
+            $table->foreign('invoice')->references('id')->on('invoices')->onDelete('cascade');
         });
     }
 

@@ -12,13 +12,17 @@ return new class extends Migration {
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->integer('user');
+            $table->unsignedBigInteger('user');
+            $table->integer('category')->nullable();
             $table->string('name');
             $table->string('address')->nullable();
             $table->date('installation');
             $table->string('note')->nullable();
+            $table->string('pppoe_user')->nullable();
+            $table->string('pppoe_password')->nullable();
             $table->enum('status', ['1', '2'])->comment('1. Aktif, 2. Non Aktif');
             $table->timestamps();
+            $table->foreign('user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

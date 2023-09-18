@@ -26,6 +26,9 @@ class StoreInvoiceRequest extends FormRequest
             'member' => 'required',
             'product' => 'nullable',
             'desc' => 'required',
+            'price' => 'required',
+            'discount' => 'nullable',
+            'fees' => 'nullable',
             'amount' => 'required',
             'status' => 'nullable',
             'due' => 'required',
@@ -39,6 +42,9 @@ class StoreInvoiceRequest extends FormRequest
             'member' => 'Pelanggan',
             'product' => 'Produk',
             'desc' => 'Diskripsi',
+            'price' => 'Harga',
+            'discount' => 'Diskon',
+            'fees' => 'Biaya Admin',
             'amount' => 'Harga',
             'status' => ' Status',
             'due' => 'Jatuh Tempo',
@@ -50,7 +56,7 @@ class StoreInvoiceRequest extends FormRequest
     {
         return $this->merge([
             'number' => fake()->randomNumber(8),
-            'status' => '1',
+            'status' => '2',
         ]);
     }
 

@@ -90,4 +90,11 @@ class AuthController extends Controller
     {
 
     }
+    public function notification(Request $request)
+    {
+        return response([
+            'message' => null,
+            'result' => $request->user()->notifications
+        ]);
+    }
 }

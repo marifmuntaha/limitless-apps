@@ -19,6 +19,11 @@ class MemberController extends Controller
     {
         $members = new Member();
         $members = $request->status ? $members->whereStatus($request->status) : $members;
+        $members = $request->order ? $members->orderBy('installation', $request->order) : $members;
+        $members = $request->month ? $members->whereMonth('installation', $request->month) : $members;
+        $members = $request->year ? $members->whereYear('installation', $request->year) : $members;
+        $members = $request->category ? $members->whereCategory($request->category) : $members;
+        $members = $request->limit ? $members->limit($request->limit) : $members;
         return response([
             'message' => null,
             'result' => MemberResource::collection($members->get())
@@ -30,6 +35,7 @@ class MemberController extends Controller
      */
     public function store(StoreMemberRequest $request)
     {
+        $this->authorize('create', Member::class);
         try {
             return ($member = Member::create($request->all())) ?
                 response([
