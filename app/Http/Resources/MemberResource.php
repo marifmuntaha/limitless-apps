@@ -38,7 +38,7 @@ class MemberResource extends JsonResource
                 'register' => Carbon::parse($this->installation)->translatedFormat('d F Y'),
                 'lastLogin' => Carbon::parse($this->updated_at)->translatedFormat('d F Y'),
                 'since' => Carbon::parse($this->installation)->diff(Carbon::now()),
-                'background' => fake()->randomElement(["purple", "info", "danger", "primary", "warning", "success", "pink", "secondary", "blue"])
+                'background' => Arr::random(["purple", "info", "danger", "primary", "warning", "success", "pink", "secondary", "blue"])
             ];
             $resource = $request->order ? Arr::set($resource, 'order', OrderResource::collection($this->orders)) : $resource;
             $resource = $request->product ? Arr::set($resource, 'product', $this->orders) : $resource;

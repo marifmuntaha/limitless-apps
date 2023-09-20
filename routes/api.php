@@ -31,16 +31,16 @@ Route::post('/auth/reset-password', [AuthController::class, 'reset'])->name('pas
 Route::group(['middleware' => 'auth:sanctum'], function (){
     Route::get('/auth/user-info', [AuthController::class, 'user']);
     Route::get('/auth/notification', [AuthController::class, 'notification']);
-    Route::apiResource('/account',AccountController::class);
-    Route::resource('/cashflow', CashflowController::class)->except(['create', 'edit']);
-    Route::apiResource('/category', CategoryController::class);
-    Route::resource('/invoice', InvoiceController::class)->except(['create', 'edit']);
     Route::post('/invoice/send-notification/{invoice}', [InvoiceController::class, 'sendNotification']);
-    Route::resource('/member', MemberController::class)->except(['create', 'edit']);
-    Route::resource('/order', OrderController::class)->except(['create', 'edit']);
-    Route::resource('/payment', PaymentController::class)->except(['create', 'edit']);
-    Route::resource('/product', ProductController::class)->except(['create', 'edit']);
-    Route::resource('/user', UserController::class)->except(['create', 'edit']);
+    Route::apiResource('/account',AccountController::class);
+    Route::apiResource('/cashflow', CashflowController::class);
+    Route::apiResource('/category', CategoryController::class);
+    Route::apiResource('/invoice', InvoiceController::class);
+    Route::apiResource('/member', MemberController::class);
+    Route::apiResource('/order', OrderController::class);
+    Route::apiResource('/payment', PaymentController::class);
+    Route::apiResource('/product', ProductController::class);
+    Route::apiResource('/user', UserController::class);
     Route::group(['prefix' => 'setting'], function (){
         Route::post('/whatsapp/init', [WhatsappController::class, 'init']);
         Route::post('/whatsapp/qr64', [WhatsappController::class, 'qr64']);
