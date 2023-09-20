@@ -46,7 +46,7 @@ class RegisterRequest extends FormRequest
     {
         return $this->merge([
             'role' => '2',
-            'image' => fake()->imageUrl
+            'image' => ''
         ]);
     }
 }
