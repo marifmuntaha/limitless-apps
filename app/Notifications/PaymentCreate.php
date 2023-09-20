@@ -39,7 +39,7 @@ class PaymentCreate extends Notification
     public function toWhatsapp(object $notifiable)
     {
         return "Pelanggan INTERNET MURAH atas nama ". $this->payment->invoices->members->name . PHP_EOL .
-            "terimakasih telah melakukan pembayaran tagihan ". $this->payment->invoices->desc ." sebesar Rp.".
+            "terimakasih telah melakukan pembayaran tagihan ". $this->payment->invoices->desc ." sebesar Rp. ".
             number_format($this->payment->amount) ." pada tanggal ". Carbon::parse($this->payment->at)->translatedFormat('d F Y');
     }
 

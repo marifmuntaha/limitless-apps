@@ -41,10 +41,10 @@ class InvoiceUpdateNotification extends Notification
             "Pelanggan INTERNET MURAH atas nama ". $this->invoice->members->name . PHP_EOL .
             "kami informasikan perubahan tagihan ". $this->invoice->desc ." sebesar Rp.". number_format($this->invoice->amount) .
             ". Dengan rincian sebagai berikut :". PHP_EOL .
-            "Tagihan : Rp.". number_format($this->invoice->price) . PHP_EOL .
-            "Diskon : Rp.". number_format($this->invoice->discount) . PHP_EOL .
-            "Biaya Admin : Rp.". number_format($this->invoice->fees) . PHP_EOL .
-            "Jumlah : Rp.". number_format($this->invoice->amount) . PHP_EOL . PHP_EOL .
+            "Tagihan : Rp. ". number_format($this->invoice->price) . PHP_EOL .
+            "Diskon : Rp. ". number_format($this->invoice->discount) . PHP_EOL .
+            "Biaya Admin : Rp. ". number_format($this->invoice->fees) . PHP_EOL .
+            "Jumlah : Rp. ". number_format($this->invoice->amount) . PHP_EOL . PHP_EOL .
             "silahkan melakukan pembayaran sebelum tanggal ". Carbon::parse($this->invoice->due)->translatedFormat('d F Y') .
             " untuk menghindari internet terisolir.". PHP_EOL .
             "pembayaran bisa melalui transfer ke ". PHP_EOL .
