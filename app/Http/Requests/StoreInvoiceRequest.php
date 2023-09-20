@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StoreInvoiceRequest extends FormRequest
 {
@@ -55,7 +56,7 @@ class StoreInvoiceRequest extends FormRequest
     protected function prepareForValidation()
     {
         return $this->merge([
-            'number' => fake()->randomNumber(8),
+            'number' => Str::upper(Str::random(8)),
             'status' => '2',
         ]);
     }
