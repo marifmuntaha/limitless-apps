@@ -54,7 +54,7 @@ class AuthController extends Controller
         }
     }
 
-    public function user(Request $request)
+    public function info(Request $request)
     {
         return response([
             'message' => null,

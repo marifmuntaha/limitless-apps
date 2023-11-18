@@ -16,9 +16,11 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $product = new Product();
+        $product = $product->orderBy('code', 'ASC');
         return response([
             'message' => null,
-            'result' => ProductResource::collection(Product::all())
+            'result' => ProductResource::collection($product->get())
         ]);
     }
 

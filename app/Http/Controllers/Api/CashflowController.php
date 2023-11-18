@@ -19,8 +19,8 @@ class CashflowController extends Controller
     public function index(Request $request)
     {
         $cashflow = new Cashflow();
-        $cashflow = $request->type ? $cashflow->whereType($request->type) : $cashflow;
-        $cashflow = ($request->start || $request->end)
+        $cashflow = $request->exists('type') ? $cashflow->whereType($request->type) : $cashflow;
+        $cashflow = ($request->exists('start') || $request->exists('end'))
             ? $cashflow->whereBetween('created_at', [$request->start, $request->end])
             : $cashflow;
         $cashflow = $cashflow->orderBy('created_at', 'DESC');
@@ -42,8 +42,7 @@ class CashflowController extends Controller
                     'message' => 'Data arus kas berhasil ditambahkan.',
                     'result' => $cashflow
                 ]) : throw new Exception('Terjadi kesalahan server');
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             return response([
                 'message' => $exception->getMessage(),
                 'result' => null
@@ -75,8 +74,7 @@ class CashflowController extends Controller
                     'message' => 'Data arus kas berhasil diperbarui.',
                     'result' => $cashflow
                 ]) : throw new Exception('Terjadi kesalahan server');
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             return response([
                 'message' => $exception->getMessage(),
                 'result' => null
@@ -96,8 +94,7 @@ class CashflowController extends Controller
                     'message' => 'Data arus kas berhasil dihapus.',
                     'result' => $cashflow
                 ]) : throw new Exception($cashflow);
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             return response([
                 'message' => $exception->getMessage(),
                 'result' => null

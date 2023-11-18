@@ -14,14 +14,27 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'member' => $this->members,
-            'product' => $this->products,
-            'price' => $this->price,
-            'cycle' => $this->cycle,
-            'due' => $this->due,
-            'status' => $this->status,
-        ];
+        if($request->exists('member')){
+            $resource = [
+                'id' => $this->id,
+                'member' => $this->members,
+                'product' => $this->products,
+                'price' => $this->price,
+                'cycle' => $this->cycle,
+                'due' => $this->due,
+                'status' => $this->status,
+            ];
+        }
+        else {
+            $resource = [
+                'id' => $this->id,
+                'product' => $this->products,
+                'price' => $this->price,
+                'cycle' => $this->cycle,
+                'due' => $this->due,
+                'status' => $this->status,
+            ];
+        }
+        return $resource;
     }
 }

@@ -29,7 +29,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/forgot-password', [AuthController::class, 'forgot']);
 Route::post('/auth/reset-password', [AuthController::class, 'reset'])->name('password.reset');
 Route::group(['middleware' => 'auth:sanctum'], function (){
-    Route::get('/auth/user-info', [AuthController::class, 'user']);
+    Route::get('/auth/info', [AuthController::class, 'info']);
     Route::get('/auth/notification', [AuthController::class, 'notification']);
     Route::post('/invoice/send-notification/{invoice}', [InvoiceController::class, 'sendNotification']);
     Route::apiResource('/account',AccountController::class);

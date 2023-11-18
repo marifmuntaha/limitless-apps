@@ -42,8 +42,7 @@ class MemberResource extends JsonResource
             ];
             $resource = $request->order ? Arr::set($resource, 'order', OrderResource::collection($this->orders)) : $resource;
             $resource = $request->product ? Arr::set($resource, 'product', $this->orders) : $resource;
-            $resource = $request->invoice ? Arr::set($resource, 'invoice', $this->invoices) : $resource;
-            $resource = $request->invoice ? Arr::set($resource, 'invoice', $this->invoices) : $resource;
+            $resource = $request->exists('invoice') ? Arr::set($resource, 'invoice', $this->invoices) : $resource;
         }
         return $resource;
     }
