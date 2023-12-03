@@ -75,8 +75,8 @@ class InvoiceController extends Controller
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
         try {
-            if ($invoice->update($request->all())) {
-                $request->user()->notify(new InvoiceUpdateNotification($invoice));
+            if ($invoice->update(array_filter($request->all()))) {
+                $request->exists('amount') && $request->user()->notify(new InvoiceUpdateNotification($invoice));
                 return response([
                     'message' => 'Data Tagihan berhasil diperbarui.',
                     'result' => $invoice

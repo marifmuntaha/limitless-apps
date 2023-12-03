@@ -24,13 +24,13 @@ class UpdateInvoiceRequest extends FormRequest
     {
         return [
             'product' => 'nullable',
-            'desc' => 'required',
-            'price' => 'required',
+            'desc' => 'nullable',
+            'price' => 'nullable',
             'discount' => 'nullable',
             'fees' => 'nullable',
-            'amount' => 'required',
+            'amount' => 'nullable',
             'status' => 'required',
-            'due' => 'required',
+            'due' => 'nullable',
             'note' => 'nullable'
         ];
     }
